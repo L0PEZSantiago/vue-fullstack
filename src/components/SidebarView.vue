@@ -1,6 +1,6 @@
 <template>
     <!-- component -->
-<div class="flex h-screen w-64 flex-col justify-between bg-zinc-900 text-zinc-300">
+<div class="flex h-screen flex-shrink-0 w-64 flex-col justify-between bg-zinc-900 text-zinc-300">
   <div class="p-4">
     <!-- items -->
     <div class="mb-4">
@@ -14,13 +14,24 @@
     <!-- item -->
     <div class="mb-4">
       <div class="flex w-full items-center justify-between">
-        <router-link to="/books" class="flex w-full cursor-pointer items-center rounded-lg px-4 py-2 transition duration-300 ease-in-out hover:bg-zinc-800 hover:text-white">
+        <router-link to="/list-of-books" class="flex w-full cursor-pointer items-center rounded-lg px-4 py-2 transition duration-300 ease-in-out hover:bg-zinc-800 hover:text-white">
        📗
           <span class="ml-3 font-bold">List of Books</span>
         </router-link>
       </div>
     </div>
+
+    <div class="mb-4">
+      <div class="flex w-full items-center justify-between">
+        <router-link to="/create-book" class="flex w-full cursor-pointer items-center rounded-lg px-4 py-2 transition duration-300 ease-in-out hover:bg-zinc-800 hover:text-white">
+          ➕
+          <span class="ml-3 font-bold"> Create Book</span>
+        </router-link>
+      </div>
+    </div>
   </div>
+
+  
   <!-- Bottom -->
   <div class="flex items-center border-t-2 border-zinc-700 p-4">
     <img src="../../assets/images/default.png" alt="" class="h-12 w-12 rounded-full object-cover" />

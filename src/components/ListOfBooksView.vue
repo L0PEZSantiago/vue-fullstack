@@ -18,7 +18,7 @@ const fetchItems = async () => {
 const goToDetailsHandler = (bookId)=>{
   console.log('go to details?', bookId)
   router.push({
-    name:'details',
+    name:'bookDetails',
     params:{
       bookId
     }
@@ -32,7 +32,7 @@ onBeforeMount(async() => {
 
 <template>
   
-  <table class="text-center table mx-auto w-12/12 ">
+  <table class="text-center  w-12/12">
     <thead>
       <tr>
         <th>id</th>
@@ -40,15 +40,20 @@ onBeforeMount(async() => {
         <th>author</th>
         <th>year</th>
         <th>Details</th>
+        <th>Actions</th>
       </tr>
     </thead>
       <tbody>
-        <tr v-for="book in refBooks" class="mt-5 border border-slate-600 hover:bg-slate-600 hover:text-white hover:cursor-pointer">
+        <tr v-for="book in refBooks" class="mt-5 border border-slate-600  overflow-hidden">
           <td>{{ book._id }}</td>
           <td>{{ book.title }}</td>
           <td>{{ book.author.firstName }} {{ book.author.lastName }}</td>
           <td>{{ book.publicationYear }}</td>
-          <td @click="goToDetailsHandler(book._id)">Details</td>
+          <td @click="goToDetailsHandler(book._id)"><button class="cursor-pointer text-white bg-blue-600 p-3 border border-blue-600 rounded-md hover:bg-blue-500">Details</button></td>
+          <td class="flex gap-3 justify-center">
+            <button class="action text-white bg-green-600 hover:bg-green-500" @click="router.push({name:'edit', params:{bookId:book._id}})">✏ Edit</button>
+            <button class="action text-white bg-red-500 hover:bg-red-400">❌ Delete</button>
+          </td>
         </tr>
       </tbody>
   </table>
@@ -57,9 +62,11 @@ onBeforeMount(async() => {
 <style scoped>
 td {
   padding: 10px;
-  border: 1px solid black;
-  background: #0000003a;
 }
 
-
+.action {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
 </style>

@@ -1,101 +1,101 @@
-<template>
-<!-- source: https://gist.github.com/nraloux/bce10c4148380061781b928cdab9b193 -->
-<!-- I have added support for dark mode and improved UI -->
+<script setup>
+import { onMounted, ref, onBeforeMount } from 'vue';
 
-<div class="flex-col justify-center align-center h-screen w-full bg-gray-400 dark:bg-purple-200">
-	<!-- Container -->
-	<div class=" flex justify-center mx-auto align-center">
-		<div class="flex justify-center align-center px-6 py-12 h-full w-full">
-			<!-- Row -->
-			<div class=" lg:w-6/12 flex justify-center align-center">
-				<div class="flex-col justify-center align-center lg:w-10/12 bg-white dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none">
-					<h3 class="py-4 text-2xl text-center text-gray-800 dark:text-white">Create an Account!</h3>
-					<form class="px-8 pt-6 pb-8 mb-4 bg-white dark:bg-gray-800 rounded">
-						<div class="mb-4 md:flex md:justify-between">
-							<div class="mb-4 md:mr-2 md:mb-0">
-								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="firstName">
-                                    First Name
-                                </label>
-								<input
-                                    class="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                    id="firstName"
-                                    type="text"
-                                    placeholder="First Name"
-                                />
-							</div>
-							<div class="md:ml-2">
-								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="lastName">
-                                    Last Name
-                                </label>
-								<input
-                                    class="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                    id="lastName"
-                                    type="text"
-                                    placeholder="Last Name"
-                                />
-							</div>
-						</div>
-						<div class="mb-4">
-							<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="email">
-                                Email
-                            </label>
-							<input
-                                class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                id="email"
-                                type="email"
-                                placeholder="Email"
-                            />
-						</div>
-						<div class="mb-4 md:flex md:justify-between">
-							<div class="mb-4 md:mr-2 md:mb-0">
-								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="password">
-                                    Password
-                                </label>
-								<input
-                                    class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                    id="password"
-                                    type="password"
-                                    placeholder="******************"
-                                />
-								<p class="text-xs italic text-red-500">Please choose a password.</p>
-							</div>
-							<div class="md:ml-2">
-								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="c_password">
-                                    Confirm Password
-                                </label>
-								<input
-                                    class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                    id="c_password"
-                                    type="password"
-                                    placeholder="******************"
-                                />
-							</div>
-						</div>
-						<div class="mb-6 text-center">
-							<button
-                                class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-900 focus:outline-none focus:shadow-outline"
-                                type="button"
-                            >
-                                Register Account
-                            </button>
-						</div>
-						<hr class="mb-6 border-t" />
-						<div class="text-center">
-							<a class="inline-block text-sm text-blue-500 dark:text-blue-500 align-baseline hover:text-blue-800"
-								href="#">
-								Forgot Password?
-							</a>
-						</div>
-						<div class="text-center">
-							<a class="inline-block text-sm text-blue-500 dark:text-blue-500 align-baseline hover:text-blue-800"
-								href="./index.html">
-								Already have an account? Login!
-							</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+const refBooks = ref({});
+const swiperInstance = null;
+
+const apiURL = "http://localhost:3000/books";
+
+
+const initSwiper = () => {
+  if (swiperInstance) {
+    swiperInstance.destroy(true, true);
+  }
+  swiperInstance = new Swiper('.swiper', {
+    // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+    slidesPerView: 1,
+    autoplay: {
+        delay: 3000,
+        disableOnInteraction: true,
+    },
+    // If we need pagination
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  
+    // And if we need scrollbar
+    scrollbar: {
+      el: '.swiper-scrollbar',
+    },
+  })
+}
+
+const fetchItems = async () => {
+  try {
+    const response = await fetch(apiURL);
+    refBooks.value = await response.json();
+    
+    if (refBooks.value.length > 1) {
+      setTimeout(() => {
+        initSwiper();
+      }, 0); // petit délai pour s'assurer que le DOM est prêt
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+onBeforeMount(() => {
+  fetchItems();
+})
+
+
+</script>
+
+<template>
+	<section class="m-auto flex flex-col w-full h-fit items-center justify-center align-center">
+<h1 class="text-center text-3xl font-bold mb-5">Bienvenue dans la bibliotheque</h1>
+
+<div class="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    <div v-for="book in refBooks" :key="book.id" class="swiper-slide "><img :src="book.coverUri" alt=""></div>
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <!-- If we need scrollbar -->
+  <div class="swiper-scrollbar"></div>
 </div>
+</section>
 </template>
+
+<style scoped>
+.swiper {
+  width: 600px;
+  height: 800px;
+}
+
+.swiper-slide {
+  background-color: red;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+}
+</style>
