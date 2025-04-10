@@ -23,12 +23,12 @@ import SlideBar from "./components/SidebarView.vue";
 </script>
 
 <template>
-  <main class="flex">
-    <SlideBar/>
+  <main class="flex ml-64 py-10">
     
     <router-view></router-view>
-
-</main>
+    
+  </main>
+  <SlideBar/>
 </template>
 
 <style scoped></style>

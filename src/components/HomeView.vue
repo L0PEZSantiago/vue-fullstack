@@ -2,7 +2,7 @@
 import { onMounted, ref, onBeforeMount } from 'vue';
 
 const refBooks = ref({});
-const swiperInstance = null;
+let swiperInstance = null;
 
 const apiURL = "http://localhost:3000/books";
 

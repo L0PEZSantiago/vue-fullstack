@@ -1,6 +1,6 @@
 <template>
     <!-- component -->
-<div class="flex h-screen flex-shrink-0 w-64 flex-col justify-between bg-zinc-900 text-zinc-300">
+<div class="flex flex-col w-64 absolute fixed h-screen top-0 left-0 bg-zinc-900 text-zinc-300">
   <div class="p-4">
     <!-- items -->
     <div class="mb-4">
@@ -33,7 +33,7 @@
 
   
   <!-- Bottom -->
-  <div class="flex items-center border-t-2 border-zinc-700 p-4">
+  <div class="flex items-center border-t-2 border-zinc-700 p-4 mt-auto">
     <img src="../../assets/images/default.png" alt="" class="h-12 w-12 rounded-full object-cover" />
     <a href="https://www.youtube.com/channel/UCZXcplsSliFfK3vGUjCKY2A" class="ml-2 text-sm" target="_blank">Yanick</a>
     <button class="ml-auto cursor-pointer">
