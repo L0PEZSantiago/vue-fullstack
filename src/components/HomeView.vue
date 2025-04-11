@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 
 const refBooks = ref({});
 let swiperInstance = null;
 
-const apiURL = "http://localhost:3000/books";
+const apiURL = "http://localhost:3000/books/?perPage=50";
 
 
 const initSwiper = () => {
@@ -85,12 +85,8 @@ onBeforeMount(() => {
 
 <style scoped>
 .swiper {
-  width: 600px;
-  height: 800px;
-}
-
-.swiper-slide {
-  background-color: red;
+  width: 500px;
+  height: 700px;
 }
 
 img {

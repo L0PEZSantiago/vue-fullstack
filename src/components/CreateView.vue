@@ -28,10 +28,11 @@ import { ref } from "vue";
             },
             body: JSON.stringify(refBook.value)
              // Je dois ensuite rediriger vers la page de liste des livres.
-        }).then(() => {
-            window.location.href = 'http://localhost:5173/list-of-books';
+        }) 
             window.alert('Le livre a bien été ajouté');
-        })
+            window.location.href = 'http://localhost:5173/list-of-books';
+            console.log(response);
+        
      } catch (error) {
         console.log(error);
         // J'affiche un message d'erreur

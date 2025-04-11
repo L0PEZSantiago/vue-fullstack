@@ -27,10 +27,14 @@ console.log(route.params.bookId);
 
 // Créer son lien avec l'id récupéré afin de récupérer l'objet entier en json et l'injecter dans une ref
 onBeforeMount(async () => {
-    const tryToFetch = await fetch(`http://localhost:3000/books/${route.params.bookId}`);
-    const oneBook = await tryToFetch.json();
-    refBook.value = oneBook;
-    console.log(refBook.value)
+    try {
+        const tryToFetch = await fetch(`http://localhost:3000/books/${route.params.bookId}`);
+        const oneBook = await tryToFetch.json();
+        refBook.value = oneBook;
+        console.log(refBook.value)
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 const sendData = async () => {
@@ -55,8 +59,11 @@ const sendData = async () => {
         //  Donc je dois vérifier les codes d’erreur et afficher un message d’erreur approprié.
         // response.ok → te dit si le status HTTP est dans la plage 200–299
         // response.status → te permet d’être précis sur le type d’erreur 
-        if (!response.ok) {
-            if (response.status === 400) {
+        
+        window.alert("Le livre a bien été modifié");
+        cancel();
+    } catch (error) {
+        if (response.status === 400) {
                 window.alert("Champs invalides. Vérifie le formulaire.");
             } else if (response.status === 404) {
                 window.alert("Le livre n'existe pas.");
@@ -66,13 +73,6 @@ const sendData = async () => {
                 window.alert("Une erreur est survenue.");
             }
             return; // Ne continue pas l’exécution si erreur
-        }
-
-        window.alert("Le livre a bien été modifié");
-        cancel();
-    } catch (error) {
-        console.log(error);
-        window.alert("Une erreur est survenue lors de la modification");
     }
     // const data = await tryToFetch.json();
 }

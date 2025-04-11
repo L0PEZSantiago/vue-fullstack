@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import ConfirmDelete from "./ConfirmDelete.vue";
 const router = useRouter()
 
-const apiURL = "http://localhost:3000/books";
+const apiURL = "http://localhost:3000/books/?perPage=50";
 const refBooks = ref([]);
 const showModal = ref(false);
 const bookToDelete = ref(0);
